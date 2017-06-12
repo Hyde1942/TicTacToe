@@ -1,4 +1,4 @@
-//(function (w, $, undefined){
+(function (w, $, undefined){
 
 //Global Game Variables
 var HUMAN         = false;
@@ -149,4 +149,4 @@ gameEngine.init();
 
 
 
-//})(window, jQuery)
+})(window, jQuery)
