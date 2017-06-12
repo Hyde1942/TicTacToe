@@ -4,7 +4,13 @@
 
 body {background-color: #000;color:#FFF;font-size: 3vh;}
 
-h1 {text-align: center;}
+h1 {text-align: center;color:#00FF00;}
+
+label {
+	text-align: center;
+	color: #00FF00;
+	font-size: 2.5vh;
+}
 
 .wrapper {
 	display: flex;
@@ -12,11 +18,46 @@ h1 {text-align: center;}
 	justify-content: center;
 }
 
+.scoreboard {
+	display: grid;
+	grid-template-columns: 10vh 10vh 10vh;
+	grid-template-rows: 10vh;
+	grid-gap: 0.5vh;
+	justify-content: center;
+	margin-bottom: 0.5em;
+}
+.scoreboard > div {
+	text-align: center;
+	overflow: hidden;
+	height: 100%;
+}
+
+
+button {
+	display: block;
+	font-size: 0.5em;
+	font-weight: bold;
+	color: #000;
+	background-color: #00FF00;
+	border:none;
+	border-radius: 5px;
+}
+input[type="text"] {
+	height: 100%;
+	border:none;
+	background-color: #000;
+	font-size: 2.5vh;
+	color:#00FF00;
+	display: block;
+	max-width: 100%;
+	text-align: center;
+}
 .board {
 	display: grid;
 	grid-template-columns: 10vh 10vh 10vh;
 	grid-template-rows: 10vh 10vh 10vh;
 	grid-gap: 0.5vh;
+	justify-content: center;
 
 }
 .controls {

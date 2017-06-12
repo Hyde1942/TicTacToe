@@ -1,4 +1,4 @@
-(function (w, $, undefined){
+//(function (w, $, undefined){
 
 //Global Game Variables
 var HUMAN         = false;
@@ -9,6 +9,7 @@ var currentPlayer = HUMAN;
 var gameState     = true;
 var boardState    = [0,0,0,0,0,0,0,0,0];
 var winMatrix     = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+var scoreboard    = {human:0,computer:0,draw:0};
 
 
 var gameEngine = {
@@ -27,8 +28,11 @@ var gameEngine = {
             that.miniMax(boardState, 0, currentPlayer, true);
         });
         $reset.on('click',function(){
-            that.reset();
+            that.reset(true);
         })
+    },
+    getPlayerValue: function (currentPlayer){
+        return currentPlayer === HUMAN ? HUMANVAL : COMPUTERVAL;
     },
     claim: function (htmlElement){
       var index = htmlElement.index();
@@ -36,21 +40,49 @@ var gameEngine = {
         this.setBoard(index,currentPlayer);
       }
     },
-    reset: function () {
+    reset: function (game) {
         boardState = [0,0,0,0,0,0,0,0,0];
         gameState  = true;
+        if (game){
+            scoreboard = {human:0,computer:0,draw:0};
+            $('input[type="text"]').val('');
+        }
         $('.row').removeClass('human computer').html('');
     },
     setBoard: function (index, player){
         if (gameState && boardState[index] === 0) {
-            var currentPlayerVal = player === HUMAN ? HUMANVAL : COMPUTERVAL;
+            var currentPlayerVal = this.getPlayerValue(player);
             boardState[index] = currentPlayerVal;
-            player === HUMAN ? $('.row').eq(index).addClass('human') : $('.row').eq(index).addClass('computer');
+            currentPlayerVal === HUMANVAL ? $('.row').eq(index).addClass('human') : $('.row').eq(index).addClass('computer');
             currentPlayer = !currentPlayer;
             //Needs to check for win here!.
             if(this.checkWin(boardState, player) || this.checkFull(boardState)) {
                 gameState = false;
-                this.reset();
+
+                if (this.checkFull(boardState)) {
+                    scoreboard.draw += 1;
+                    currentPlayer = !currentPlayer;
+                    $('#draw-games').val(scoreboard.draw);
+                    this.reset(false);
+                }else {
+                    switch (currentPlayerVal) {
+                        case -1:
+                        alert('Player WON');
+                        scoreboard.human += 1;
+                        currentPlayer = !currentPlayer;
+                        $('#player-score').val(scoreboard.human);
+                        break;
+                        
+                        case 1:
+                        scoreboard.computer += 1;
+                        currentPlayer = !currentPlayer;
+                        $('#computer-score').val(scoreboard.computer);
+                        alert('Computer WON!');
+                        break;
+                    }
+                    this.reset(false);
+                }
+                
             }
 
         }
@@ -64,7 +96,7 @@ var gameEngine = {
        return true;
     },
     checkWin: function (board, player) {
-      var currentPlayerVal = player === HUMAN ? HUMANVAL : COMPUTERVAL;
+      var currentPlayerVal = this.getPlayerValue(player);
       var win = true;
       for (var i = 0; i < 8; i++) {
         win = true;
@@ -85,7 +117,7 @@ var gameEngine = {
             return -10 + depth;
         if (this.checkFull(board))
             return 0;
-        var value = player == HUMAN ? HUMANVAL : COMPUTERVAL;
+        var value = this.getPlayerValue(player);
         var max = -Infinity;
         var index = 0;
         var tiles = $('.row');
@@ -117,4 +149,4 @@ gameEngine.init();
 
 
 
-})(window, jQuery)
+//})(window, jQuery)
