@@ -1,0 +1,43 @@
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+body {background-color: #000;color:#FFF;font-size: 3vh;}
+
+h1 {text-align: center;}
+
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.board {
+	display: grid;
+	grid-template-columns: 10vh 10vh 10vh;
+	grid-template-rows: 10vh 10vh 10vh;
+	grid-gap: 0.5vh;
+
+}
+.controls {
+	display: grid;
+	grid-template-columns:15vh 15vh;
+	grid-template-rows:5vh;
+	grid-gap:0.5vh;
+	margin-top: 1vh;
+}
+
+.row {
+	border: 1px solid #FFF;
+	border-radius: 5px;
+	line-height: 10vh;
+	text-align: center;
+}
+
+.human {
+ 	background-color: #00FF00;
+}
+
+.computer {
+	background: #FF0000;
+}
